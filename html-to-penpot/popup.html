@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=400">
+  <title>HTML to Penpot</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 360px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .logo {
+      width: 28px;
+      height: 28px;
+      background: #e94560;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      color: #fff;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 16px;
+    }
+    .section {
+      background: #16213e;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .section label {
+      font-size: 12px;
+      color: #aaa;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .section input[type="text"] {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #0f3460;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
+    .section input[type="text"]:focus {
+      border-color: #e94560;
+    }
+    .options {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .option-chip {
+      padding: 5px 10px;
+      border-radius: 14px;
+      background: #0f3460;
+      border: 1px solid #333;
+      color: #aaa;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .option-chip.active {
+      background: #e94560;
+      border-color: #e94560;
+      color: #fff;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #e94560;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #c73e54;
+    }
+    .btn-primary:disabled {
+      background: #555;
+      color: #888;
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #e94560;
+      border: 1px solid #e94560;
+      margin-top: 8px;
+    }
+    .btn-secondary:hover {
+      background: rgba(233, 69, 96, 0.1);
+    }
+    .status {
+      margin-top: 12px;
+      font-size: 12px;
+      text-align: center;
+      min-height: 18px;
+    }
+    .status.success { color: #4caf50; }
+    .status.error { color: #f44336; }
+    .status.info { color: #64b5f6; }
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 12px;
+      font-size: 11px;
+      color: #888;
+    }
+    .stat-item { text-align: center; }
+    .stat-value { font-size: 18px; font-weight: 600; color: #e94560; }
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 10px;
+      color: #555;
+    }
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #888;
+      border-top-color: #e94560;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">P</div>
+    <h1>HTML to Penpot</h1>
+  </div>
+  <div class="subtitle">Convert the current page into a Penpot design file</div>
+
+  <div class="section">
+    <label>File Name</label>
+    <input type="text" id="fileName" placeholder="My Design">
+  </div>
+
+  <div class="section">
+    <label>Export Scope</label>
+    <div class="options">
+      <div class="option-chip active" data-scope="visible">Visible Area</div>
+      <div class="option-chip" data-scope="full">Full Page</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <label>Detail Level</label>
+    <div class="options">
+      <div class="option-chip" data-detail="low">Low</div>
+      <div class="option-chip active" data-detail="medium">Medium</div>
+      <div class="option-chip" data-detail="high">High</div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" id="exportBtn">Export to .penpot</button>
+  <button class="btn btn-secondary" id="previewBtn">Preview Elements</button>
+
+  <div class="status" id="status"></div>
+
+  <div class="stats" id="stats" style="display:none">
+    <div class="stat-item">
+      <div class="stat-value" id="statFrames">0</div>
+      <div>Frames</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="statTexts">0</div>
+      <div>Texts</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="statImages">0</div>
+      <div>Images</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="statTotal">0</div>
+      <div>Total</div>
+    </div>
+  </div>
+
+  <div class="footer">html-to-penpot v1.0 · Open Source</div>
+
+  <script src="lib/jszip.min.js"></script>
+  <script src="penpot-builder.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

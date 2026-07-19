@@ -1,0 +1,12 @@
+# Penpot source code (reference only, not part of the extension)
+penpot-2.16.2/
+penpot-2.16.2.zip
+
+# Test/exported .penpot files
+*.penpot
+
+# Screenshots
+ss/
+
+# macOS
+.DS_Store
