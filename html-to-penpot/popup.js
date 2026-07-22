@@ -7,7 +7,6 @@
 
   // State
   let exportScope = "visible";
-  let detailLevel = "medium";
   let collectedData = null;
 
   // DOM refs
@@ -23,14 +22,6 @@
       document.querySelectorAll(".option-chip[data-scope]").forEach((c) => c.classList.remove("active"));
       chip.classList.add("active");
       exportScope = chip.dataset.scope;
-    });
-  });
-
-  document.querySelectorAll(".option-chip[data-detail]").forEach((chip) => {
-    chip.addEventListener("click", () => {
-      document.querySelectorAll(".option-chip[data-detail]").forEach((c) => c.classList.remove("active"));
-      chip.classList.add("active");
-      detailLevel = chip.dataset.detail;
     });
   });
 
